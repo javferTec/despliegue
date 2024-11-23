@@ -1,0 +1,542 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Despliegue De Aplicaciones Web]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>lib\media\favicon.png</url><title>Despliegue De Aplicaciones Web</title><link/></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Tue, 26 Nov 2024 11:54:51 GMT</lastBuildDate><atom:link href="lib\rss.xml" rel="self" type="application/rss+xml"/><pubDate>Tue, 26 Nov 2024 11:54:51 GMT</pubDate><ttl>60</ttl><dc:creator/><item><title><![CDATA[CONTROL DE VERSIONES]]></title><description><![CDATA[ 
+ <br><br><br>Git es un sistema de control de versiones libre y distribuido diseñado para gestionar proyectos. Su objetivo es controlar y gestionar una enorme cantidad de ficheros de forma fácil y eficiente.<br>Se basa en repositorios que se inicializan en un directorio concreto y tienen toda la información de los cambios realizados.<br><br>El repositorio remoto puede ubicarse en GitHub, GitLab, Bitbucket, SourceForge, entre otros. Es una copia del repositorio de git que se encuentra alojado en un servidor o en un sitio distinto al local.<br>El repositorio local se divide en:<br>
+<br>Directorio de trabajo (working directory): donde se almacena el contenido del repositorio.
+<br>Área de preparación (staging area o index o cached): donde están indicados los cambios de confirmación.
+<br>Repositorio local (local repository): donde están todas las versiones de manera local.
+<br><br>
+<br>untracked: Son ficheros que existen en el área de trabajo pero no existen para Git. No han sido añadidos al seguimiento del repositorio.
+<br>staged: Son ficheros que se han añadido al staging area y están listos para ser incluidos en el siguiente commit. Añadidos con git add.
+<br>committed: Son ficheros que se guardaron en el último commit y que no han sido modificados desde entonces. Están en el repositorio y no tienen cambios pendientes.
+<br>modified: Son ficheros que se han modificado desde el último commit pero que aún no se han añadido al staging area. Han sido editados en el área de trabajo, pero Git aún no los ha preparado para el commit.
+<br>ignored: Son ficheros que Git ignora debido a las reglas definidas en el archivo .gitignore.
+<br><br>
+<br>
+Añadir un fichero al staging area:
+git add fichero
+
+
+<br>
+Confirmar los cambios del staging area al repositorio:
+git commit -m "mensaje"
+
+
+<br>
+Incluir en el commit los cambios en los ficheros staged y también en los modified:
+git commit -a -m "mensaje"
+
+
+<br>
+Quitar un fichero del staging area (opuesto a git add):
+git restore --staged fichero
+# Alternativa menos usada:
+git reset fichero
+
+
+<br>
+Quitar un fichero del staging area pero mantenerlo en el área de trabajo:
+git rm --cached fichero
+
+
+<br>
+Borrar un fichero del staging area y del área de trabajo:
+git rm fichero
+
+
+<br>
+Restaurar un fichero modificado en el área de trabajo al estado del último commit:
+git restore fichero
+# Alternativa menos usada:
+git checkout fichero
+
+
+<br><br>Para ver el estado de los ficheros en las diferentes áreas (untracked, staged, modified):<br>git status
+<br>El comando muestra:<br>
+<br>Archivos en la staging area (cambios a ser confirmados).
+<br>Archivos modificados pero no añadidos al staging area.
+<br>Archivos sin seguimiento (untracked).
+<br>Ejemplo de salida:<br>En la rama main
+Cambios a ser confirmados:
+  (usa "git restore --staged &lt;archivo&gt;..." para sacarlos del área de stage)
+	nuevos archivos: facturas.html
+
+Cambios no rastreados para el commit:
+  (usa "git add &lt;archivo&gt;..." para actualizar lo que será confirmado)
+  (usa "git restore &lt;archivo&gt;..." para descartar los cambios en el directorio de trabajo)
+	modificados:     main.js
+
+Archivos sin seguimiento:
+  (usa "git add &lt;archivo&gt;..." para incluirlos en el área de stage)
+	cliente.html
+<br><br>
+<br>Si modificas un fichero después de usar git add y no vuelves a añadirlo con git add, el commit solo incluirá los cambios que estaban en el staging area cuando ejecutaste git add.
+<br>Para evitar este problema, se puede usar el comando git commit -a, que automáticamente añade los ficheros modificados al staging area antes de confirmar los cambios.
+<br><br>Una misma rama en git puede estar en varios sitios a la vez. El repositorio es el histórico donde están todos los commits que se han hecho.<br>Explicación de las ramas suponiendo que estamos en master:<br>
+<br>
+Carpeta local o área de trabajo o árbol de trabajo: Es donde están los ficheros con lo que trabajamos nosotros directamente mientras programamos.
+
+<br>
+Repositorio local: Es el repositorio que tenemos en nuestro ordenador.
+
+<br>Rama master: Es donde se guardan los ficheros al hacer commit
+<br>Rama origin/master: Es una copia que hay del repositorio remoto. 
+
+
+<br>
+Repositorio remoto: Es un repositorio que está en otra máquina.
+
+<br>Rama master: Es donde queremos copiar los commits de nuestra rama master. Al hacer referencia a una rama de un repositorio remoto, se usara la expresión origin master con un espacio en medio.
+
+
+<br>Si queremos movernos entre ramas:<br>git switch master
+git checkout master # Comando más antiguo, se recomienda switch
+<br>Si queremos crear una nueva rama:<br>git branch &lt;nombreRama&gt;
+<br>Si queremos crear una rama y automáticamente movernos a ella:<br>git switch -c &lt;nombreRama&gt;
+git checkout -b &lt;nombreRama&gt; # Comando antiguo, se recomienda switch
+<br>Si queremos movernos a un commit en concreto con switch:<br>git switch --detach &lt;hashDelCommit&gt;
+<br>Si queremos movernos a una rama de tipo origin/rama debemos hacerlo con:<br>git switch --detach origin/rama
+<br>Note
+DETACH nos informa de que no se puede crear commit al lugar al que nos movemos. Es decir, no podemos trabajar en ese lugar
+<br>Si queremos publicar los cambios de una rama:<br>git push origin master
+git push
+<br>Si queremos obtener los cambios del remoto:<br>git fetch origin master
+git fetch
+
+# FETCH TIENE LA OPCIÓN --PRUNE PARA BORRAR LAS CARPETAS QUE HAN SIDO BORRADAS EN REMOTO
+git fetch --prune
+<br>Si queremos obtener y aplicar en nuestra área de trabajo los cambios del remoto:<br>git pull
+<br>Caution
+git pull hace un fetch y un merge, lo que puede producir conflictos que posteriormente haya que solucionar y puede que el histórico se modifique.
+<br>Para mergear lo que hay en la rama origin/master en  la rama master:<br>git merge origin/master
+<br>Si queremos eliminar una rama en local:<br>git branch -d &lt;rama&gt;
+<br>Si queremos eliminar una rama en remoto:<br>git push origin -d &lt;rama&gt;
+<br>Para fusionar ramas tenemos dos opciones:<br>git merge &lt;nombreRama&gt;
+git rebase &lt;nombreRama&gt;
+<br><br>Merge conserva la historia original de la rama fusionada y rebase reescribe la historia de la rama para que parezca que los commits se aplicaron de forma lineal. En otras palabras, merge fusiona e incorpora los cambios especificados a la rama actual (donde está el HEAD) mientras que rebase mueve el HEAD a la rama especificada.<br>Note
+ HEAD es donde estamos ubicados._
+<br><br>En Git un "remote" hace referencia a un servidor de Git donde subimos el código. Por defecto cuando hacemos git clone se crea un remote llamado origin.<br>Si queremos ver la lista de remotes:<br>git remote -v
+<br>Para añadir un remote:<br>git remote add otroservidor &lt;URL&gt;
+<br><br>GIT RESET modifica el estado actual de un fichero.<br>Tienes diferentes opciones:<br>
+<br>--soft: Vuelve a un commit y conserva los cambios en el directorio de trabajo y en el stage.
+<br>git reset --soft &lt;hashCommit&gt;
+<br>
+<br>--mixed: Los cambios se conservan en el stage.
+<br>git reset --mixed &lt;hashCommit&gt;
+<br>
+<br>--hard: Los cambios no se conservan.
+<br>git reset --hard &lt;hashCommit&gt;
+<br><br>Note
+La opción HEAD~1 hace referencia al último commit.
+<br><br>GIT REVERT deshace un commit y crea uno nuevo volviendo al estado del commit especificado.<br>git revert HEAD~1
+git revert &lt;hashCommit&gt;
+<br>
+<br>Prepara un nuevo commit que deshace el último commit pero sin realmente hacer el commit. Lo que hace el modificar los ficheros y añadirlos a la staged area. Después se hace el commit. La opción --no-commit es útil porque nos permite revisar que va a hacer el commit y nos permite hacer alguna modificación más. Si no estamos interesados en hacer el commit lo podemos abortar con git revert --abort o usar el ya conocido git restore --staged --worktree fichero.
+<br>git revert --no-commit HEAD~1
+git commit -am "Mensaje de commit" # -a para añadir a stage &amp; -m para el mensaje del commit
+<br>Note
+git restore --staged --worktree fichero &nbsp;restaura el archivo&nbsp;fichero&nbsp;tanto en el área de preparación como en el directorio de trabajo a su estado en el último commit, eliminando cualquier cambio realizado.
+<br><br><br>Por defecto Git no sube las carpetas vacías, por lo que si queremos que las suba hay que añadir algún fichero. Por convención se suele crear un fichero llamado&nbsp;.gitkeep&nbsp;y al ya haber algún fichero, git subirá esa carpeta.<br><br>El fichero&nbsp;.gitignore&nbsp;permite indicar que carpetas no se deben subir a git. El fichero debe estar en el raíz del proyecto de git.<br><br>Normalmente trabajamos siempre en nuestro ordenador y no queremos todas las veces volver a poner la contraseña. En ese caso se puede decir a git que la almacene y no nos la vuelva a pedir:<br>
+<br>No te vuelve a pedir la contraseña en 15 min
+<br>git config --global credential.helper cache
+<br>
+<br>Almacena la contraseña en el disco en texto plano y nunca mas te la vuelve a pedir.
+<br>git config --global credential.helper store
+<br><br>Es un almacén que permite guardar los cambios de los que todavía no se quiere hacer un commit.<br>
+<br>Guardar solo lo modificado (estén o no en el staged area):
+<br>git stash push
+<br>
+<br>Guarda todos los ficheros aunque NO estén en la stage area. Es decir, también los ficheros nuevos. Y al hacer el pop se restaura el estado en el staged area.
+<br>git stash push --include-untracked
+<br><br>
+<br>Y si luego queremos recuperar los cambios se hace con:
+<br>git stash pop --index # Si no se añade --index, no se restaurará el staged area.
+<br><br>El comando git log permite ver el histórico de commits.<br>
+<br>Ver los commits en una única línea cada commit.
+<br>git --no-pager log --pretty=oneline
+<br>
+<br>Ver los commits indicando que campos queremos mostrar e indicando el formato de la fecha.
+<br>git --no-pager log --pretty=tformat:"%h %cn %cd %s" --date=format:"%d/%m/%Y %H:%M:%S"
+<br><img alt="gitLog.png" src="0-git-control-de-versiones\images\gitlog.png"><br><br>Los mensajes de commit deben seguir el siguiente formato:<br>type(#issue):titulos
+
+Explicación (opcional)
+<br>Siendo<br>
+<br>type
+
+<br>feat: Si se añade una nueva funcionalidad (feature)
+<br>fix: Si se arregla (fix) un error
+<br>docs: Si solo cambia cosas de la documentación
+<br>style: Si solo se cambia el estilo del código como tabuladores, puntos y comas, formateo, etc.
+<br>refactor: Si se cambia el código para mejorar su calidad pero sin modificar la funcionalidad. Eso se llamada refactorizar.
+<br>test: Si se cambian cosas relacionadas con test automáticos.
+<br>chore: Si se cambian cosas relacionadas con el despliegue.
+
+
+<br>#issue: Es el Nº de la incidencia a la que hace referencia.
+<br>Ejemplos:<br>
+<br>Se arregla el fallo 45 que se llama "Falla si la fecha está vacía"
+<br>  fix(#45):Falla si la fecha está vacía
+<br>
+<br>Se añade la nueva funcionalidad llamada "Mostrar el listado de los pacientes" con Nº 456
+<br>feat(#456):Mostrar el listado de los pacientes
+]]></description><link>0-git-control-de-versiones\control-de-versiones-(git).html</link><guid isPermaLink="false">0- GIT Control de Versiones/Control de versiones (Git).md</guid><pubDate>Sat, 23 Nov 2024 11:48:37 GMT</pubDate><enclosure url="0-git-control-de-versiones\images\gitlog.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src="0-git-control-de-versiones\images\gitlog.png"&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[CONTROL DE VERSIONES AVANZADO]]></title><description><![CDATA[ 
+ <br><br><br>Las ramas con las cuales vamos a trabajar son las siguientes:<br>
+<br>main / master
+<br>hotfix
+<br>release
+<br>develop
+<br>features
+<br>Sigue una estrategia muy similar a GitFlow, la cual permite el trabajo en equipo en un proyecto. Su funcionamiento es muy sencillo, cada miembro tiene asignada una feature que hace referencia a un issue, una vez terminada la funcionalidad se une a develop, posteriormente develop y release se unen, al igual que main y release. Esto permite crear un histórico lineal.<br>Note
+Las ramas de funcionalidad una vez terminadas deben ser eliminadas.
+<br>Note
+Las ramas de funcionalidad deben nombrarse como:<br>
+nombrePersona/numIssue
+Un ejemplo sería: pedro/4<br>
+Quiere decir que en el issue 4, en esa funcionalidad está trabajando Pedro.
+<br>Cada miembro todos los días antes de empezar a trabajar debería obtener los cambios del remoto y ver donde se encuentra develop y así ver si es necesario obtener los cambios más recientes de los compañeros, por si hubieran conflictos con su código ir solucionando los poco a poco y no todos de golpe una vez terminada la feature cuando se va a unir a develop. Es decir debería hacer un git fetch &amp;&amp; git merge.<br>Representado de forma gráfica un histórico sencillo podría verse de la siguiente forma.<br>
+<img alt="Estartegia-gitflow.png" src="0-git-control-de-versiones\estartegia-gitflow.png"><br><br>
+<br>develop: Lo que se ha desarrollando y el equipo de desarrollo dice que ya funciona. Cuando se quiera se pasa a&nbsp;release.
+<br>release: Lo que se esta probando en un entorno similar al de producción. Cuando está probado, se copia a&nbsp;master.
+<br>master: Lo que ya se puede instalar en el producción.
+<br>rama de funcionalidad (feature): Cada vez que alguien quiere hacer algo , crea una rama desde&nbsp;develop&nbsp;y cuando acaba la fusiona en&nbsp;develop.
+<br>Tip
+En la rama de funcionalidad se pueden hacer todos los commits que queramos ya que luego se van a unificar en uno solo. Es lo que llamamos "microcommits". Es así ya que son commits&nbsp;parciales&nbsp;que se hacen para acabar la tarea pero finalmente en la rama&nbsp;develop&nbsp;queremos que sean un solo commit. 
+Ese único commit debe tener el formato anteriormente explicado (<a data-href="Control de versiones (Git)#Mensajes de commit" href="0-git-control-de-versiones\control-de-versiones-(git).html#Mensajes_de_commit" class="internal-link" target="_self" rel="noopener nofollow">Control de versiones (Git) &gt; Mensajes de commit</a>):<br>
+type(#issue):titulos
+<br><br>
+<br>Crea la rama&nbsp;feature&nbsp;desde&nbsp;develop.
+<br>git branch pedro/4
+git switch pedro/4
+<br>
+<br>Realizar la tarea con tantos commits como sea necesario.
+<br>touch file1.txt
+git commit -a -m "cambio 1"
+
+touch file2.txt
+git commit -a -m "cambio 2"
+
+touch file3.txt
+git commit -a -m "cambio 3"
+<br>
+<br>Mergear la rama&nbsp;develop&nbsp;en&nbsp;feature&nbsp;ya que así se resuelven los problemas de mergeo en la rama&nbsp;feature
+<br>git switch pedro/4
+git merge develop # Resolver conflictos si hay
+<br>
+<br>Ir a la rama&nbsp;develop&nbsp;y mergear la rama&nbsp;feature&nbsp;con&nbsp;--squash
+<br>git switch develop
+git merge --squash pedro/4
+git commit -m "feat(#12):Login validation"
+<br>
+<br>Borrar la rama&nbsp;feature
+<br>git branch -d pedro/4 # local
+git push origin --delete pedro/4 # remoto
+<br>
+<br>Subir la rama&nbsp;develop
+<br>git push develop
+<br>
+<br>Mergear la rama&nbsp;develop&nbsp;en&nbsp;release&nbsp;y subir&nbsp;release
+<br>git switch release
+git merge --ff-only develop
+<br>
+<br>Mergear la rama&nbsp;release&nbsp;en&nbsp;master&nbsp;y subir&nbsp;master
+<br>git switch main
+git merge --ff-only release
+<br><a data-href="Estrategia de trabajo Git" href="0-git-control-de-versiones\excalidraw\estrategia-de-trabajo-git.html" class="internal-link" target="_self" rel="noopener nofollow">Estrategia de trabajo Git</a><br>
+<img alt="Pasos de GitFlow.png" src="0-git-control-de-versiones\pasos-de-gitflow.png"><br>Note
+git merge --squash pedro/4
+
+Se utiliza para juntar todos los microcommits en un solo commit que habrá que indicar. Se usa para pasar los microcommits de una rama feature a develop
+<br>Note
+git merge --ff-only develop
+
+La opción --ff-only es usada para que si la unión no es Fast-Forward no se llegue a hacer y falle indicándolo.
+La unión puede ser Fast-Forward que indica que no hay problemas o en el caso de haber conflictos serían ramas divergentes.
+<br><br><br><br>
+<br>Bajarse lo último de las 3 ramas.
+<br>git fetch --prune &amp;&amp; git switch develop &amp;&amp; git merge --ff-only origin/develop &amp;&amp; git switch release &amp;&amp; git merge --ff-only origin/release &amp;&amp; git switch master &amp;&amp; git merge --ff-only origin/master &amp;&amp; git switch develop
+<br>
+<br>Hacer un merge de las 3 ramas
+<br>git switch release &amp;&amp; git merge --ff-only develop &amp;&amp; git switch master &amp;&amp; git merge --ff-only release &amp;&amp; git switch develop
+<br>
+<br>Subir las 3 ramas
+<br>git switch master &amp;&amp; git push &amp;&amp; git switch release &amp;&amp; git push &amp;&amp; git switch develop &amp;&amp; git push
+]]></description><link>0-git-control-de-versiones\control-de-versiones-avanzado-(git).html</link><guid isPermaLink="false">0- GIT Control de Versiones/Control de Versiones Avanzado (Git).md</guid><pubDate>Sat, 23 Nov 2024 11:10:34 GMT</pubDate><enclosure url="0-git-control-de-versiones\estartegia-gitflow.png" length="0" type="image/png"/><content:encoded>&lt;figure&gt;&lt;img src="0-git-control-de-versiones\estartegia-gitflow.png"&gt;&lt;/figure&gt;</content:encoded></item><item><title><![CDATA[INTRODUCCIÓN]]></title><description><![CDATA[ 
+ <br><br><br>La web son páginas (En formato HTML, Imagen, JSON, XML ,etc) que se interconectan entre ellas por enlaces (urls).<br>El navegador (cliente) solicita por <a class="internal-link" data-href="./TCP-IP y UDP.md" href="1-introduccion-la-web\tcp-ip-y-udp.html" target="_self" rel="noopener nofollow">TCP/IP</a> el recurso a obtener. El formato de como solicita ese recurso es por el protocolo HTTP.<br>Y el servidor de TCP/IP responde usando el protocolo HTTP devolviendo los datos. A ese software lo llamaremos servidor Web. El servidor es "personalizable" permitiendo que se ejecute código específico para nuestra aplicación. Ese código específico es el código de servidor que se suele escribir en Java, PHP, NodeJS, etc.<br>El servidor no solo puede comunicarse con servicios en local, sino también puede acceder a servicios externos.<br><br>Los navegadores suelen llevar herramientas para depurar las páginas web. En Chrome , si pulsamos F12 y pinchamos en la opción de "Network" (Menú superior), podemos ver todas las peticiones que hace el navegador al cargar una página.<br><br>Desplegar es instalar a aplicación web que hemos desarrollado (HTML,CSS,JS,Código Servidor, etc) en un servidor Web.<br><br>1. Generación de la aplicación a instalar<br>
+1. Obtener el código fuente<br>
+2. Compilar el código fuente<br>
+3. Probar la aplicación<br>
+4. Analizar la calidad del código<br>
+<br>
+2. Múltiples programas a instalar<br>
+1. Sistema Operativo<br>
+2. Servidor Web<br>
+3. Base de datos<br>
+4. La aplicación<br>
+5. Servidor de envío de correos<br>
+6. Etc.<br>3. Hosts<br>
+1. La base de datos puede estar en un Host y el servidor web en otro Host, etc.<br>
+2. Los Hosts pueden ser máquinas virtuales o máquinas físicas, estando cada una de ellas en proveedores distintos (Amazon AWS, Microsoft Azure, Google Cloud, etc).<br>4. Administración<br>
+1. Creación de copias de seguridad<br>
+2. Logs<br>
+3. Seguridad: Recuperación en caso de pérdida de datos por algún fallo<br>5. Rendimiento: Permitir que la aplicación siga funcionando aunque haya un pico de peticiones<br>
+1. Añadir nuevas máquinas si hay un pico de peticiones y quitarlas cuando ya no las hay tantas peticiones<br>
+2. Balanceo de carga entre todos los servidores de la aplicación<br>
+3. Monitorización del rendimiento<br>
+4. Alertas de bajo rendimiento<br>
+<br>
+6. Fiabilidad: Permitir que la aplicación siga funcionando aunque falle algún Host.<br>7. Microservicios:<br>
+1. Una única aplicación se divide en pequeñas micro-aplicaciones, llamadas microservicios, con lo que se multiplican todas las complicaciones anteriores por el número de microservicios que tengamos.<br><br>Herramientas que vamos a usar en clase:<br>
+<br>Script de Bash
+<br>Git
+<br>Docker
+<br>Git Actions
+<br>NodeJS
+<br>Otras herramientas y Servicios:<br>
+<br>Kubernetes
+<br>Vagrant
+<br>AWS
+<br>Ansible
+<br>Jenkins
+<br>etc. Hay muchísimas herramientas distintas y servicios que ayudan al despliegue de aplicaciones.
+<br><br>
+<br>
+VPS (Virtual Private Server): Una máquina virtual que alquilas a una empresa.
+
+<br>
+Empresa de Hosting: Empresa que alquila los Host sean tanto un VPSs como una máquina real
+
+<br>
+Balanceador de carga: Software que le llega una petición y la redirige a otro Host de entre varios para no sobrecargar ningún Host o evitar enviarlo a un host que no funciona
+
+<br>
+Escalabilidad: Diseñar la aplicación de forma que se alquilen o se desalquilen Hosts (VPS o máquinas reales) en función de la carga del sistema
+
+<br>
+Tolerancia a fallos: Diseñar la aplicación de forma que aunque un host falle, la aplicación siga funcionando
+
+<br><br>
+<br>
+IAAS (Infraestructura como servicio): Si la empresa de Hosting solo se ofrece el Host y nosotros nos tenemos que instalar todo el software, incluyendo el sistema operativo y administrarlo todo.
+
+<br>
+PAAS (Plataforma como servicio): Si la empresa de Hosting nos ofrece el Host pero también software genérico ya instalado como el Sistema Operativo, Servidor Web, Servidor de Correo, Balanceador de Carga , etc. En este caso nosotros solo debemos instalar el código específico de nuestra aplicación. En este caso aunque nos ofrecen un host ya que en algún sitio debe estar la app, realmente nos están ofreciendo el servidor web donde instalar nuestra app. En el caso de PAAS, no tenemos que administrar nosotros ni el Sistema Operativo ni el servidor.
+
+<br>
+SAAS (Software como Servicio): Como desarrolladores nunca usamos un SASS ya que la empresa de hosting ya ofrece hasta la aplicación instalada. Un ejemplo sería Google con "Google Docs" , Microsoft con su "MS Office 365", Dropbox , etc. que ya ofrecen todo para el usuario final.
+
+<br><br>El IAAS es mas versátil ya que solo nos ofrecen el ordenador y nosotros nos montamos todo como queremos. El problema es que es mas complicado todo de hacer y tenemos que administrarlo todo: Sistema operativo, servidor web y aplicación.<br>Por otro lado en el PAAS, solo nos tenemos que preocupar de nuestra aplicación lo que hace que sea mas sencillo. El problema es que ya no hay tanta versatilidad, ya que debemos ceñirnos al entorno que nos ofrece la empresa.<br><br>NodeJS (o simplemente node) es un lenguaje de programación basado en JavaScript. Al ser un lenguaje interpretado, su forma de trabajar es mas similar a BASH que a Java. Además, incluye un gestor de paquetes: npm (Node package manager )<br><br>
+<br>Inicializar un proyecto en Node. Se crea el fichero package.json que es fundamental en node ya que contiene toda la información del proyecto
+<br>npm init
+<br>
+<br>
+Instalar un paquete nuestro proyecto. Se guarda en la carpeta node_modules:
+
+<br>Instalar la librería de JavaScript llamada "jQuery"
+
+npm install jquery
+
+
+<br>Instalar un paquete de forma global. Se guarda en "/usr/bin"
+
+npm install typescript -g
+
+
+<br>Instalar todo de nuevo si no está la carpeta node_modules
+
+npm install
+
+
+<br><br>Ahora vamos a ver como ejecutar código node.<br>El programa mas sencillo es hacer el "Hola Mundo". Para ello creamos un fichero llamado "index.js" con el contenido siguiente:<br>#!/usr/bin/env node
+
+console.log(``'Hola Mundo'``);
+<br>Para ejecutarlo hay que lanzar la orden:<br>node index.js
+<br>Y mostrará por consola el mensaje "Hola mundo"<br>Como en NodeJS se usa JavaScript, podemos usar todo lo que sabemos de JavaScript en un programa de node.<br><br><br>Unicode es un estándar de codificación que tiene como objetivo permitir la representación de todos los caracteres utilizados en los sistemas de escritura del mundo, además de símbolos y emojis. A diferencia del ASCII (7 bits ) y ANSI (8 bits), Unicode asigna a cada carácter un número único, denominado "punto de código" y los puntos de código son desde U+0000 hasta U+10FFFF (2.097.152 de caracteres).<br>Además de unicode están:<br>
+<br>
+ASCII: ASCII es un código de 7 bits que permite representar 128 caracteres diferentes, incluyendo las letras mayúsculas y minúsculas del alfabeto inglés, los números, algunos símbolos de puntuación y caracteres de control (como el salto de línea o el tabulador). Fue desarrollado en los años 60 y está diseñado principalmente para manejar textos en inglés, ya que no incluye acentos ni caracteres especiales de otros idiomas.
+
+<br>
+ANSI: Amplían el estándar ASCII a 8 bits. Sin embargo hay distintas codificaciones ANSI en los nuevos 128 caracteres para distintos idiomas como ruso o griego. Es decir es como que hay distintos estándares ANSI llamados ISO-8859-x. Por ejemplo hay un estándar ANSI para el griego (ISO 8859-7), otro para el cirílico (ISO 8859-7) , etc. Y son distintos en los 128 caracteres últimos. Cada uno de estos estándares se llama Pagina de código.
+
+<br>
+Windows: Windows tiene sus propio estándar que es muy similar al ANSI
+
+<br><br>UTF-8 (Unicode Transformation Format - 8 bits) es un esquema de codificación variable que utiliza entre 1 y 4 bytes para representar cada carácter Unicode. Es altamente eficiente para textos en idiomas que utilizan caracteres latinos comunes, ya que estos se representan en un solo byte. UTF-8 se ha convertido en la codificación más utilizada en la web debido a su compatibilidad con sistemas más antiguos que utilizan ASCII y su capacidad para codificar cualquier carácter Unicode. Además, es muy eficiente en términos de almacenamiento para la mayoría de los lenguajes occidentales.]]></description><link>1-introduccion-la-web\introducción-la-web.html</link><guid isPermaLink="false">1- Introduccion - La Web/Introducción - La Web.md</guid><pubDate>Sat, 02 Nov 2024 15:41:08 GMT</pubDate></item><item><title><![CDATA[TCP/IP Y UDP]]></title><description><![CDATA[ 
+ <br><br>Tanto TCP/IP como UDP son protocolos que forman parte de la suite de protocolos Internet Protocol (IP), pero cada uno tiene un comportamiento diferente.<br>TCP/IP antes de transferir establece una conexión entre el servidor y el receptor, garantizando que ambos están listos para intercambiar información. Además, garantiza la entrega correcta de datos, ya que divide los datos en segmentos y asegura que lleguen en el orden correcto. La desventaja es que al ser más fiable es más lento.<br>Algunas aplicaciones comunes son navegación web (HTTP/HTTPS), correo electrónico (SMTP), transferencia de archivos (FTP).<br>Mientras que UDP no establece una conexión previa para enviar datos. Simplemente envía los datos sin asegurarse de que lleguen correctamente, lo cual no garantiza fiabilidad a pesar de ser más rápido.<br>Algunas aplicaciones comunes son streaming de video y audio, juegos en línea, transmisiones en tiempo real, VoIP, donde la velocidad es más importante que la fiabilidad.<br><br>
+<br>TCP: Fiable, orientado a la conexión, control de flujo, reenvía datos perdidos, más lento.
+<br>UDP: No fiable, sin conexión, más rápido, pero sin garantía de entrega o de orden.
+]]></description><link>1-introduccion-la-web\tcp-ip-y-udp.html</link><guid isPermaLink="false">1- Introduccion - La Web/TCP-IP y UDP.md</guid><pubDate>Sun, 20 Oct 2024 11:30:32 GMT</pubDate></item><item><title><![CDATA[ADMINISTRACIÓN DE SERVIDORES WEB]]></title><description><![CDATA[ 
+ <br><br>Hay dos tipos de servidores web:<br>
+<br>
+<a class="internal-link" data-href="./servidores web externos.md" href="2-administración-de-servidores-web\servidores-web-externos.html" target="_self" rel="noopener nofollow">Servidores Web Externos</a>: Son programas completos que hacen de servidor Web. Una vez instalados/ejecutados se añade el código específico de la aplicación en la carpeta del servidor que indique la documentación. Algunas herramientas son: Apache2 y Nginx.
+
+<br>
+<a class="internal-link" data-href="./servidores web integrados.md" href="2-administración-de-servidores-web\servidores-web-integrados.html" target="_self" rel="noopener nofollow">Servidores Web Integrados</a> (o librerías de servidores web):  Se hace una aplicación (por ejemplo en Java) y se añade como una librería (un JAR) , el código del Servidor Web. Se puede hacer con NodeJS y la librería Express.
+
+<br><br>Servidor Externo: gasta menos RAM pero cada proyecto no es independiente, todos comparten el mismo servidor.<br>Servidor Integrado:  gasta mas RAM, pero es más versátil, se utiliza virtualización (docker).]]></description><link>2-administración-de-servidores-web\administracion-de-servidores-web.html</link><guid isPermaLink="false">2- Administración de Servidores Web/Administracion de Servidores Web.md</guid><pubDate>Sat, 02 Nov 2024 15:22:55 GMT</pubDate></item><item><title><![CDATA[servidores web externos]]></title><description><![CDATA[ 
+ <br><br>Este servidor Web es un proyecto de una fundación sin ánimo de lucro llamada&nbsp;Apache Software Fundation. El proyecto del servidor web se llama&nbsp;Apache HTTP Server Project&nbsp;por lo que a veces se confunde el nombre del servidor con el nombre de la fundación.<br>
+<br>Instalación: Para usar el servidor Apache solo hay que descargárselo y ejecutar el programa "/bin/httpd.exe"
+<br>Despliegue: Para desplegar páginas web en Apache solo hay que copiarlas en la carpeta "htdocs"
+<br>Configuración/administración: Para configurar/administrar el servidor hay que modificar los ficheros de la carpeta "conf"
+]]></description><link>2-administración-de-servidores-web\servidores-web-externos.html</link><guid isPermaLink="false">2- Administración de Servidores Web/servidores web externos.md</guid><pubDate>Sat, 23 Nov 2024 12:55:41 GMT</pubDate></item><item><title><![CDATA[servidores web integrados]]></title><description><![CDATA[ 
+ <br>Pasemos ahora a ver como es un servidor web integrado. Para entenderlo vamos a usar el lenguaje NodeJS como ejemplo y la librería que tendrá el servidor será&nbsp;Express.<br>
+<br>Instalar paquete express:
+<br>npm install express
+<br>
+<br>Ejemplo básico:&nbsp;Ejemplo Hello world. Crear el fichero "index.js" con el siguiente contenido.
+<br>#!/usr/bin/env node
+ 
+const express = require('express')
+const app = express()
+const port = 8080
+ 
+app.get('/', (request, response) =&gt; {
+  response.send('Hello from Express!')
+})
+ 
+ 
+app.listen(port, (err) =&gt; {
+  console.log(`server is listening on ${port}`)
+})
+<br>Ahora debemos ejecutar el fichero index.js<br>node index.js
+<br>Y si navegamos a&nbsp;http://localhost:8080&nbsp;veremos el texto "Hello from Express!"<br>
+<br>Servir páginas estáticas:&nbsp; Deberemos crear dentro del proyecto la carpeta "HTML" y ahí crear el fichero "index.html". Crear el fichero "index.js" con el siguiente contenido.
+<br>#!/usr/bin/env node
+ 
+const express = require('express')
+const app = express()
+const port = 8080
+ 
+app.get('/', (request, response) =&gt; {
+  response.send('Hello from Express!')
+})
+app.use('/html', express.static(__dirname + '/html'));
+ 
+ 
+app.listen(port, (err) =&gt; {
+  console.log(`server is listening on ${port}`)
+})
+<br>Ahora debemos ejecutar el fichero index.js<br>node index.js
+<br>Y si navegamos a&nbsp;http://localhost:8080/html/index.html&nbsp;veremos la página que hemos creado.]]></description><link>2-administración-de-servidores-web\servidores-web-integrados.html</link><guid isPermaLink="false">2- Administración de Servidores Web/servidores web integrados.md</guid><pubDate>Sat, 23 Nov 2024 12:55:41 GMT</pubDate></item><item><title><![CDATA[EL PROTOCOLO HTTP]]></title><description><![CDATA[ 
+ <br><br>Es usado para enviar y recibir datos de la web.<br><br>
+<br>Sencillo: es en modo texto y fácil de usar por una persona.
+<br>Extensible: se pueden enviar más metadatos que los que están por defecto (Ej. nº de página).
+<br>Sin estado: cada petición es independiente. Eso es un problema en sitios como por ejemplo un carrito de la compra.
+<br><br>
+<br>Caché: mejora la velocidad al controlar la cache de las páginas.
+<br>Autenticación: permite identificar usuarios.
+<br>Proxys: permite de forma transparente el uso de proxys.
+<br>Sesiones: Gracias a las cookies podemos mantener el estado entre peticiones.
+<br>Formatos: Permite indicar el formato de lo que se envía, se pide y se retorna.
+<br><br>Una petición HTTP tiene la siguiente forma:<br>GET /index.html HTTP/1.1
+Host: www.fpmislata.com
+Accept-Language: fr
+<br>
+<br>
+Donde cada parámetro nos da cierta información:
+
+<br>GET: Es el método por el que se piden los datos. Entre sus valores está: GET, PUT,POST, DELETE.
+<br>/index.html: Es la ruta dentro del servidor del documento que estamos pidiendo
+<br>HTTP/1.1&nbsp;: La versión del protocolo. Prácticamente siempre es 1.1
+<br>Host:&nbsp;www.fpmislata.com: Indica el nombre del host al que va dirigida la petición.
+<br>Accept-Language: fr: Indica en que idioma queremos que nos retorne los datos. En este caso es en francés.
+
+
+<br>La respuesta del servidor es la siguiente:<br>HTTP/1.1 200 OK
+Content-Length: 29769
+Content-Type: text/html; charset=utf-8
+
+&lt;!DOCTYPE html... (los 29769 bytes de la página)
+<br>
+<br>
+Donde cada parámetro nos da cierta información:
+
+<br>HTTP/1.1: La versión del protocolo con la que responde. Prácticamente siempre es 1.1
+<br>200 OK: Si ha sido exitosa o no la petición.
+<br>Content-Length: 29769: Indica las bytes que ocupan los datos que se retornan
+<br>Content-Type: text/html; charset=utf-8: Indica el formato&nbsp;MIME type &nbsp;de los datos que retornan y su codificación. En este caso es en HTML y en formato UTF-8.
+<br>&lt;!DOCTYPE html…: Son finalmente los datos que se han pedido.
+
+
+<br><br>Las cabeceras se dividen entre las que se envían en la petición y las que se retorna en la respuesta.<br><br>Cabeceras que se pueden enviar en la petición<br>
+<br>Accept: El formato&nbsp;MIME type&nbsp;en la que queremos que se retornen los datos. Ej: En&nbsp;text/html, en&nbsp;text/xml,&nbsp;application/json&nbsp;,&nbsp;application/pdf, etc. Luego el servidor los retornará en el formato que quiera/pueda
+<br>Accept-Language: El idioma en el que queremos que nos retorne los datos. Luego el servidor los retornará en el idioma que quiera/pueda.
+<br>Host: El dominio al que se está enviando la petición. Esta cabecera el muy útil ya que permite en un mismo servidor tener alojados varios dominios.
+<br>Content-Type: El formato de los datos que envían al servidor. Ej: En&nbsp;text/html, en&nbsp;text/xml,&nbsp;application/json&nbsp;,&nbsp;application/pdf, etc. Y como están codificado. Normalmente los formatos son&nbsp;utf-8&nbsp;o&nbsp;ISO-8859-1.
+<br><br>Cabeceras que se pueden enviar en la respuesta<br>
+<br>Content-Type: El formato de los datos que se retorna. Ej: En&nbsp;text/html, en&nbsp;text/xml,&nbsp;application/json&nbsp;,&nbsp;application/pdf, etc. Y como están codificado. Normalmente los formatos son&nbsp;utf-8&nbsp;o&nbsp;ISO-8859-1. No tiene porque coincidir con&nbsp;Accept.
+<br>Content-Language: El idioma de los datos que se retorna.
+<br>Content-Length: Tamaño en bytes de los datos
+<br>Cache-Control: Cuanto tiempo pueden estar cacheado los datos.
+<br>Note
+La cabecera Content-Type es importante para el programador ya que el servidor puede no saber exactamente el formato de los datos y es necesario que lo indiquemos nosotros. Muchas veces hay ademas problemas con la codificación si es utf-8 o ISO-8859-1 por lo que también se debe indicar.
+Por otro lado notar que Content-Type se puede usar tanto en la petición como en la respuesta. Se usa en la petición si se envían datos en la petición
+<br><br>Es estado es lo que indica si una petición HTTP ha tenido éxito o no. Sus principales valores son:<br>
+<br>200-299: La petición ha tenido éxito
+<br>300-399: Redirección de los datos.
+<br>400-499: Los datos que ha enviado el cliente no son correctos
+<br>500-599: Se ha producido un error en el servidor.
+<br>De entre todos los código están algunos que solemos ver a menudo:<br>
+<br>200: Todo ha ido bien.
+<br>201: Se ha creado el recurso (Suele ser en un INSERT).
+<br>204: La petición no retorna datos. (Suele ser en un DELETE).
+<br>400: Los datos que ha enviado el cliente no son correctos.
+<br>401: Hay que estar logueado.
+<br>403: El usuario está logueado pero tiene Prohibido el acceso al documento.
+<br>404: No encuentra el documento.
+<br>500: Error del servidor.
+<br><br>Los métodos ( o verbos) HTTP indican que acción queremos hacer con los datos. Al navegar normalmente se usa siempre el&nbsp;GET.<br>
+<br>GET: Queremos obtener los datos
+<br>POST: Queremos añadir los datos.
+<br>PUT: Queremos actualizar nuevos datos.
+<br>DELETE: Queremos borrar los datos.
+<br><br>REST es una interfaz para conectar varios sistemas basados en el protocolo HTTP&nbsp;(uno de los protocolos más antiguos) y nos sirve para obtener y generar datos y operaciones, devolviendo esos datos en formatos muy específicos, como XML y JSON (actualmente el más usado).<br><br>Vamos a ver 4 método HTTP que coinciden con los 4 métodos de un CRUD o con operaciones de SQL:<br><br><br>Veamos la estructura de la URL de las peticiones en un supuesto ejemplo de una base de datos de usuarios:<br><br><br>const app = express()
+const port = 80
+  
+app.get('/', (request, response) =&gt; {
+  response.set('Content-Type', 'text/plain');
+  response.status(200);
+ 
+  if (request.header('Accept-Language').startsWith("ca-ES")) {
+    response.send("Hola mon");
+  } else if (request.header('Accept-Language').startsWith("en-EN")) {
+    response.send("Hello World");
+  } else  {
+    response.send("Hola mundo");
+  }
+ 
+   
+});
+app.post('/', (request, response) =&gt; {
+  response.status(200);
+  response.send('Hello from post!');
+});
+app.delete('/', (request, response) =&gt; {
+  response.status(200);
+  response.send('Hello from delete!');
+});
+app.delete('/libro/38', (request, response) =&gt; {
+  response.status(200);
+  response.send('Borrado libro 38');
+});
+app.delete('/libro/39', (request, response) =&gt; {
+  response.status(404);
+  response.send('El libro 39 no existe');
+});
+  
+app.listen(port, (err) =&gt; {
+  console.log(`server is listening on ${port}`)
+})
+]]></description><link>3-el-protocolo-http\el-protocolo-http.html</link><guid isPermaLink="false">3- El protocolo HTTP/El protocolo HTTP.md</guid><pubDate>Sat, 02 Nov 2024 16:03:24 GMT</pubDate></item><item><title><![CDATA[ÍNDICE DE DESPLIEGUE DE APLICACIONES WEB]]></title><description><![CDATA[ 
+ <br><br><br>
+<br><a class="internal-link" data-href="./0- GIT Control de Versiones/Control de Versiones Avanzado (Git).md" href="0-git-control-de-versiones\control-de-versiones-avanzado-(git).html" target="_self" rel="noopener nofollow">Control de Versiones Avanzado (Git)</a>
+<br><a class="internal-link" data-href="./0- GIT Control de Versiones/Control de versiones (Git).md" href="0-git-control-de-versiones\control-de-versiones-(git).html" target="_self" rel="noopener nofollow">Control de versiones (Git)</a>
+<br><a class="internal-link" data-href="./0- GIT Control de Versiones/Estartegia-gitflow.png" href="0-git-control-de-versiones\estartegia-gitflow.png" target="_self" rel="noopener nofollow">Estartegia-gitflow.png</a>
+<br><a class="internal-link" data-href="./0- GIT Control de Versiones/Pasos de GitFlow.png" href="0-git-control-de-versiones\pasos-de-gitflow.png" target="_self" rel="noopener nofollow">Pasos de GitFlow.png</a>
+<br><br>
+<br><a class="internal-link" data-href="./1- Introduccion - La Web/Introducción - La Web.md" href="1-introduccion-la-web\introducción-la-web.html" target="_self" rel="noopener nofollow">Introducción - La Web</a>
+<br><a class="internal-link" data-href="./1- Introduccion - La Web/TCP-IP y UDP.md" href="1-introduccion-la-web\tcp-ip-y-udp.html" target="_self" rel="noopener nofollow">TCP-IP y UDP</a>
+<br><br>
+<br><a class="internal-link" data-href="./2- Administración de Servidores Web/Administracion de Servidores Web.md" href="2-administración-de-servidores-web\administracion-de-servidores-web.html" target="_self" rel="noopener nofollow">Administracion de Servidores Web</a>
+<br><a class="internal-link" data-href="./2- Administración de Servidores Web/servidores web externos.md" href="2-administración-de-servidores-web\servidores-web-externos.html" target="_self" rel="noopener nofollow">servidores web externos</a>
+<br><a class="internal-link" data-href="./2- Administración de Servidores Web/servidores web integrados.md" href="2-administración-de-servidores-web\servidores-web-integrados.html" target="_self" rel="noopener nofollow">servidores web integrados</a>
+<br><br>
+<br><a class="internal-link" data-href="./3- El protocolo HTTP/El protocolo HTTP.md" href="3-el-protocolo-http\el-protocolo-http.html" target="_self" rel="noopener nofollow">El protocolo HTTP</a>
+]]></description><link>index.html</link><guid isPermaLink="false">index.md</guid><pubDate>Sat, 02 Nov 2024 15:54:05 GMT</pubDate></item></channel></rss>

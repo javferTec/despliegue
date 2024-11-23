@@ -1,0 +1,210 @@
+<html><head>
+		<title>El protocolo HTTP</title>
+		<base href="../">
+		<meta id="root-path" root-path="../">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+		<meta charset="UTF-8">
+		<meta name="description" content="4- Despliegue De Aplicaciones Web - El protocolo HTTP">
+		<meta property="og:title" content="El protocolo HTTP">
+		<meta property="og:description" content="4- Despliegue De Aplicaciones Web - El protocolo HTTP">
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="3-el-protocolo-http/el-protocolo-http.html">
+		<meta property="og:image" content="undefined">
+		<meta property="og:site_name" content="4- Despliegue De Aplicaciones Web">
+		<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="lib/rss.xml"><script async="" id="webpage-script" src="lib/scripts/webpage.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script type="module" async="" id="graph-view-script" src="lib/scripts/graph-view.js"></script><script async="" id="graph-wasm-script" src="lib/scripts/graph-wasm.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="graph-render-worker-script" src="lib/scripts/graph-render-worker.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="tinycolor-script" src="lib/scripts/tinycolor.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="pixi-script" src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.4.0/pixi.min.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><script async="" id="minisearch-script" src="https://cdn.jsdelivr.net/npm/minisearch@6.3.0/dist/umd/index.min.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><link rel="icon" href="lib/media/favicon.png"><script async="" id="graph-data-script" src="lib/scripts/graph-data.js" onload="this.onload=null;this.setAttribute(&quot;loaded&quot;, &quot;true&quot;)"></script><style>body{--line-width:40em;--line-width-adaptive:40em;--file-line-width:40em;--sidebar-width:min(20em, 80vw);--collapse-arrow-size:11px;--tree-horizontal-spacing:0.6em;--tree-vertical-spacing:0.6em;--sidebar-margin:12px}.sidebar{height:100%;min-width:calc(var(--sidebar-width) + var(--divider-width-hover));max-width:calc(var(--sidebar-width) + var(--divider-width-hover));font-size:14px;z-index:10;position:relative;overflow:hidden;transition:min-width ease-in-out,max-width ease-in-out;transition-duration:.2s;contain:size}.sidebar-left{left:0}.sidebar-right{right:0}.sidebar.is-collapsed{min-width:0;max-width:0}body.floating-sidebars .sidebar{position:absolute}.sidebar-content{height:100%;min-width:calc(var(--sidebar-width) - var(--divider-width-hover));top:0;padding:var(--sidebar-margin);padding-top:4em;line-height:var(--line-height-tight);background-color:var(--background-secondary);transition:background-color,border-right,border-left,box-shadow;transition-duration:var(--color-fade-speed);transition-timing-function:ease-in-out;position:absolute;display:flex;flex-direction:column}.sidebar:not(.is-collapsed) .sidebar-content{min-width:calc(max(100%,var(--sidebar-width)) - 3px);max-width:calc(max(100%,var(--sidebar-width)) - 3px)}.sidebar-left .sidebar-content{left:0;border-top-right-radius:var(--radius-l);border-bottom-right-radius:var(--radius-l)}.sidebar-right .sidebar-content{right:0;border-top-left-radius:var(--radius-l);border-bottom-left-radius:var(--radius-l)}.sidebar:has(.sidebar-content:empty):has(.topbar-content:empty){display:none}.sidebar-topbar{height:2em;width:var(--sidebar-width);top:var(--sidebar-margin);padding-inline:var(--sidebar-margin);z-index:1;position:fixed;display:flex;align-items:center;transition:width ease-in-out;transition-duration:inherit}.sidebar.is-collapsed .sidebar-topbar{width:calc(2.3em + var(--sidebar-margin) * 2)}.sidebar .sidebar-topbar.is-collapsed{width:0}.sidebar-left .sidebar-topbar{left:0}.sidebar-right .sidebar-topbar{right:0}.topbar-content{overflow:hidden;overflow:clip;width:100%;height:100%;display:flex;align-items:center;transition:inherit}.sidebar.is-collapsed .topbar-content{width:0;transition:inherit}.clickable-icon.sidebar-collapse-icon{background-color:transparent;color:var(--icon-color-focused);padding:0!important;margin:0!important;height:100%!important;width:2.3em!important;margin-inline:0.14em!important;position:absolute}.sidebar-left .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);right:var(--sidebar-margin)}.sidebar-right .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);left:var(--sidebar-margin)}.clickable-icon.sidebar-collapse-icon svg.svg-icon{width:100%;height:100%}.sidebar-section-header{margin:0 0 1em 0;text-transform:uppercase;letter-spacing:.06em;font-weight:600}body{transition:background-color var(--color-fade-speed) ease-in-out}.webpage-container{display:flex;flex-direction:row;height:100%;width:100%;align-items:stretch;justify-content:center}.document-container{opacity:1;flex-basis:100%;max-width:100%;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;transition:opacity .2s ease-in-out;contain:inline-size}.hide{opacity:0;transition:opacity .2s ease-in-out}.document-container>.markdown-preview-view{margin:var(--sidebar-margin);margin-bottom:0;width:100%;width:-webkit-fill-available;width:-moz-available;width:fill-available;background-color:var(--background-primary);transition:background-color var(--color-fade-speed) ease-in-out;border-top-right-radius:var(--window-radius,var(--radius-m));border-top-left-radius:var(--window-radius,var(--radius-m));overflow-x:hidden!important;overflow-y:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;contain:inline-size}.document-container>.markdown-preview-view>.markdown-preview-sizer{padding-bottom:80vh!important;width:100%!important;max-width:var(--line-width)!important;flex-basis:var(--line-width)!important;transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}.markdown-rendered img:not([width]),.view-content img:not([width]){max-width:100%;outline:0}.document-container>.view-content.embed{display:flex;padding:1em;height:100%;width:100%;align-items:center;justify-content:center}.document-container>.view-content.embed>*{max-width:100%;max-height:100%;object-fit:contain}:has(> :is(.math,table)){overflow-x:auto!important}.document-container>.view-content{overflow-x:auto;contain:content;padding:0;margin:0;height:100%}.scroll-highlight{position:absolute;width:100%;height:100%;pointer-events:none;z-index:1000;background-color:hsla(var(--color-accent-hsl),.25);opacity:0;padding:1em;inset:50%;translate:-50% -50%;border-radius:var(--radius-s)}</style><script defer="">async function loadIncludes(){if("file:"!=location.protocol){let e=document.querySelectorAll("include");for(let t=0;t<e.length;t++){let o=e[t],l=o.getAttribute("src");try{const e=await fetch(l);if(!e.ok){console.log("Could not include file: "+l),o?.remove();continue}let t=await e.text(),n=document.createRange().createContextualFragment(t),i=Array.from(n.children);for(let e of i)e.classList.add("hide"),e.style.transition="opacity 0.5s ease-in-out",setTimeout((()=>{e.classList.remove("hide")}),10);o.before(n),o.remove(),console.log("Included file: "+l)}catch(e){o?.remove(),console.log("Could not include file: "+l,e);continue}}}else{if(document.querySelectorAll("include").length>0){var e=document.createElement("div");e.id="error",e.textContent="Web server exports must be hosted on an http / web server to be viewed correctly.",e.style.position="fixed",e.style.top="50%",e.style.left="50%",e.style.transform="translate(-50%, -50%)",e.style.fontSize="1.5em",e.style.fontWeight="bold",e.style.textAlign="center",document.body.appendChild(e),document.querySelector(".document-container")?.classList.remove("hide")}}}document.addEventListener("DOMContentLoaded",(()=>{loadIncludes()}));let isFileProtocol="file:"==location.protocol;function waitLoadScripts(e,t){let o=e.map((e=>document.getElementById(e+"-script"))),l=0;!function e(){let n=o[l];l++,n&&"true"!=n.getAttribute("loaded")||l<o.length&&e(),l<o.length?n.addEventListener("load",e):t()}()}</script><link rel="stylesheet" href="lib/styles/obsidian.css"><link rel="stylesheet" href="lib/styles/theme.css"><link rel="preload" href="lib/styles/global-variable-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="lib/styles/global-variable-styles.css"></noscript><link rel="preload" href="lib/styles/main-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="lib/styles/main-styles.css"></noscript><link rel="preload" href="lib/styles/snippets.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="lib/styles/snippets.css"></noscript></head><body class="publish css-settings-manager theme-dark show-inline-title show-ribbon"><script defer="">let theme=localStorage.getItem("theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");"dark"==theme?(document.body.classList.add("theme-dark"),document.body.classList.remove("theme-light")):(document.body.classList.add("theme-light"),document.body.classList.remove("theme-dark")),window.innerWidth<480?document.body.classList.add("is-phone"):window.innerWidth<768?document.body.classList.add("is-tablet"):window.innerWidth<1024?document.body.classList.add("is-small-screen"):document.body.classList.add("is-large-screen")</script><div class="webpage-container workspace"><div class="sidebar-left sidebar"><div class="sidebar-handle"></div><div class="sidebar-topbar"><div class="topbar-content"><label class="theme-toggle-container" for="theme_toggle"><input class="theme-toggle-input" type="checkbox" id="theme_toggle"><div class="toggle-background"></div></label></div><div class="clickable-icon sidebar-collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M21 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V5C23 3.89543 22.1046 3 21 3Z"></path><path d="M10 4V20"></path><path d="M4 7H7"></path><path d="M4 10H7"></path><path d="M4 13H7"></path></svg></div></div><div class="sidebar-content"><div class="search-input-container"><input enterkeyhint="search" type="search" spellcheck="false" placeholder="Search..."><div class="search-input-clear-button" aria-label="Clear search"></div></div><include src="lib/html/file-tree.html"></include></div><script defer="">let ls = document.querySelector(".sidebar-left"); ls.classList.add("is-collapsed"); if (window.innerWidth > 768) ls.classList.remove("is-collapsed"); ls.style.setProperty("--sidebar-width", localStorage.getItem("sidebar-left-width"));</script></div><div class="document-container markdown-reading-view hide"><div class="markdown-preview-view markdown-rendered allow-fold-headings allow-fold-lists is-readable-line-width"><style id="MJX-CHTML-styles"></style><div class="markdown-preview-sizer markdown-preview-section"><h1 class="page-title heading inline-title" id="EL PROTOCOLO HTTP"><p dir="auto">EL PROTOCOLO HTTP</p></h1><div class="el-h1 heading-wrapper"><div class="heading-children"><div class="el-p"><p dir="auto"><strong><em>Es usado para enviar y recibir datos de la web.</em></strong></p></div><div class="el-h2 heading-wrapper"><h2 data-heading="Características" dir="auto" class="heading" id="Características"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>Características</h2><div class="heading-children"><div class="el-ul"><ul>
+<li data-line="0" dir="auto"><strong>Sencillo</strong>: es en modo texto y fácil de usar por una persona.</li>
+<li data-line="1" dir="auto"><strong>Extensible</strong>: se pueden enviar más metadatos que los que están por defecto (Ej. nº de página).</li>
+<li data-line="2" dir="auto"><strong>Sin estado</strong>: cada petición es independiente. Eso es un problema en sitios como por ejemplo un carrito de la compra.</li>
+</ul></div></div></div><div class="el-h2 heading-wrapper"><h2 data-heading="Ventajas" dir="auto" class="heading" id="Ventajas"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>Ventajas</h2><div class="heading-children"><div class="el-ul"><ul>
+<li data-line="0" dir="auto"><strong>Caché</strong>: mejora la velocidad al controlar la cache de las páginas.</li>
+<li data-line="1" dir="auto"><strong>Autenticación</strong>: permite identificar usuarios.</li>
+<li data-line="2" dir="auto"><strong>Proxys</strong>: permite de forma transparente el uso de proxys.</li>
+<li data-line="3" dir="auto"><strong>Sesiones</strong>: Gracias a las cookies podemos mantener el estado entre peticiones.</li>
+<li data-line="4" dir="auto"><strong>Formatos</strong>: Permite indicar el formato de lo que se envía, se pide y se retorna.</li>
+</ul></div></div></div><div class="el-h2 heading-wrapper"><h2 data-heading="Formato" dir="auto" class="heading" id="Formato"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>Formato</h2><div class="heading-children"><div class="el-p"><p dir="auto">Una petición HTTP tiene la siguiente forma:</p></div><div class="el-pre"><pre class="language-http" tabindex="0"><code data-line="0" class="language-http is-loaded"><span class="token request-line"><span class="token method property">GET</span> <span class="token request-target url">/index.html</span> <span class="token http-version property">HTTP/1.1</span></span>
+<span class="token header"><span class="token header-name keyword">Host</span><span class="token punctuation">:</span> <span class="token header-value">www.fpmislata.com</span></span>
+<span class="token header"><span class="token header-name keyword">Accept-Language</span><span class="token punctuation">:</span> <span class="token header-value">fr</span></span>
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-ul"><ul>
+<li data-line="0" dir="auto"><div class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>
+<p>Donde cada parámetro nos da cierta información:</p>
+<ul>
+<li data-line="2" dir="auto"><strong><code>GET</code></strong>: Es el método por el que se piden los datos. Entre sus valores está: GET, PUT,POST, DELETE.</li>
+<li data-line="3" dir="auto"><strong><code>/index.html</code></strong>: Es la ruta dentro del servidor del documento que estamos pidiendo</li>
+<li data-line="4" dir="auto"><strong><code>HTTP/1.1</code></strong>&nbsp;: La versión del protocolo. Prácticamente siempre es 1.1</li>
+<li data-line="5" dir="auto"><strong><code>Host:&nbsp;www.fpmislata.com:</code></strong> Indica el nombre del host al que va dirigida la petición.</li>
+<li data-line="6" dir="auto"><strong><code>Accept-Language: fr</code>:</strong> Indica en que idioma queremos que nos retorne los datos. En este caso es en francés.</li>
+</ul>
+</li>
+</ul></div><div class="el-p"><p dir="auto">La respuesta del servidor es la siguiente:</p></div><div class="el-pre"><pre class="language-http" tabindex="0"><code data-line="0" class="language-http is-loaded"><span class="token response-status"><span class="token http-version property">HTTP/1.1</span> <span class="token status-code number">200</span> <span class="token reason-phrase string">OK</span></span>
+<span class="token header"><span class="token header-name keyword">Content-Length</span><span class="token punctuation">:</span> <span class="token header-value">29769</span></span>
+<span class="token header"><span class="token header-name keyword">Content-Type</span><span class="token punctuation">:</span> <span class="token header-value">text/html; charset=utf-8</span></span>
+
+&lt;!DOCTYPE html... (los 29769 bytes de la página)
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-ul"><ul>
+<li data-line="0" dir="auto"><div class="list-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>
+<p>Donde cada parámetro nos da cierta información:</p>
+<ul>
+<li data-line="2" dir="auto"><strong><code>HTTP/1.1</code></strong>: La versión del protocolo con la que responde. Prácticamente siempre es 1.1</li>
+<li data-line="3" dir="auto"><strong><code>200 OK</code></strong>: Si ha sido exitosa o no la petición.</li>
+<li data-line="4" dir="auto"><strong><code>Content-Length: 29769</code></strong>: Indica las bytes que ocupan los datos que se retornan</li>
+<li data-line="5" dir="auto"><strong><code>Content-Type: text/html; charset=utf-8</code></strong>: Indica el formato&nbsp;MIME type &nbsp;de los datos que retornan y su codificación. En este caso es en HTML y en formato UTF-8.</li>
+<li data-line="6" dir="auto"><strong><code>&lt;!DOCTYPE html…</code></strong>: Son finalmente los datos que se han pedido.</li>
+</ul>
+</li>
+</ul></div></div></div><div class="el-h2 heading-wrapper"><h2 data-heading="Cabeceras HTTP" dir="auto" class="heading" id="Cabeceras_HTTP"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>Cabeceras HTTP</h2><div class="heading-children"><div class="el-p"><p dir="auto">Las cabeceras se dividen entre las que se envían en la petición y las que se retorna en la respuesta.</p></div><div class="el-h4 heading-wrapper"><h4 data-heading="Petición:" dir="auto" class="heading" id="Petición:"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>Petición:</h4><div class="heading-children"><div class="el-p"><p dir="auto">Cabeceras que se pueden enviar en la petición</p></div><div class="el-ul"><ul>
+<li data-line="0" dir="auto"><code>Accept</code>: El formato&nbsp;MIME type&nbsp;en la que queremos que se retornen los datos. Ej: En&nbsp;<code>text/html</code>, en&nbsp;<code>text/xml</code>,&nbsp;<code>application/json</code>&nbsp;,&nbsp;<code>application/pdf</code>, etc. Luego el servidor los retornará en el formato que quiera/pueda</li>
+<li data-line="1" dir="auto"><code>Accept-Language</code>: El idioma en el que queremos que nos retorne los datos. Luego el servidor los retornará en el idioma que quiera/pueda.</li>
+<li data-line="2" dir="auto"><code>Host</code>: El dominio al que se está enviando la petición. Esta cabecera el muy útil ya que permite en un mismo servidor tener alojados varios dominios.</li>
+<li data-line="3" dir="auto"><code>Content-Type</code>: El formato de los datos que envían al servidor. Ej: En&nbsp;<code>text/html</code>, en&nbsp;<code>text/xml</code>,&nbsp;<code>application/json</code>&nbsp;,&nbsp;<code>application/pdf</code>, etc. Y como están codificado. Normalmente los formatos son&nbsp;<code>utf-8</code>&nbsp;o&nbsp;<code>ISO-8859-1</code>.</li>
+</ul></div></div></div><div class="el-h4 heading-wrapper"><h4 data-heading="Respuesta" dir="auto" class="heading" id="Respuesta"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>Respuesta</h4><div class="heading-children"><div class="el-p"><p dir="auto">Cabeceras que se pueden enviar en la respuesta</p></div><div class="el-ul"><ul>
+<li data-line="0" dir="auto"><code>Content-Type</code>: El formato de los datos que se retorna. Ej: En&nbsp;<code>text/html</code>, en&nbsp;<code>text/xml</code>,&nbsp;<code>application/json</code>&nbsp;,&nbsp;<code>application/pdf</code>, etc. Y como están codificado. Normalmente los formatos son&nbsp;<code>utf-8</code>&nbsp;o&nbsp;<code>ISO-8859-1</code>. No tiene porque coincidir con&nbsp;<code>Accept</code>.</li>
+<li data-line="1" dir="auto"><code>Content-Language</code>: El idioma de los datos que se retorna.</li>
+<li data-line="2" dir="auto"><code>Content-Length</code>: Tamaño en bytes de los datos</li>
+<li data-line="3" dir="auto"><code>Cache-Control</code>: Cuanto tiempo pueden estar cacheado los datos.</li>
+</ul></div><div class="el-div"><div data-callout-metadata="" data-callout-fold="" data-callout="note" class="callout"><div class="callout-title" dir="auto"><div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path><path d="m15 5 4 4"></path></svg></div><div class="callout-title-inner">Note</div></div><div class="callout-content">
+<p dir="auto">La cabecera <strong>Content-Type</strong> es importante para el programador ya que el servidor puede no saber exactamente el formato de los datos y es necesario que lo indiquemos nosotros. Muchas veces hay ademas problemas con la codificación si es utf-8 o ISO-8859-1 por lo que también se debe indicar.</p>
+<p dir="auto">Por otro lado notar que <strong>Content-Type</strong> se puede usar tanto en la petición como en la respuesta. Se usa en la petición si se envían datos en la petición</p>
+</div></div></div></div></div></div></div><div class="el-h2 heading-wrapper"><h2 data-heading="Estados HTTP" dir="auto" class="heading" id="Estados_HTTP"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>Estados HTTP</h2><div class="heading-children"><div class="el-p"><p dir="auto">Es estado es lo que indica si una petición HTTP ha tenido éxito o no. Sus principales valores son:</p></div><div class="el-ul"><ul>
+<li data-line="0" dir="auto"><strong>200-299</strong>: La petición ha tenido éxito</li>
+<li data-line="1" dir="auto"><strong>300-399</strong>: Redirección de los datos.</li>
+<li data-line="2" dir="auto"><strong>400-499</strong>: Los datos que ha enviado el cliente no son correctos</li>
+<li data-line="3" dir="auto"><strong>500-599</strong>: Se ha producido un error en el servidor.</li>
+</ul></div><div class="el-p"><p dir="auto">De entre todos los código están algunos que solemos ver a menudo:</p></div><div class="el-ul"><ul>
+<li data-line="0" dir="auto"><strong>200</strong>: Todo ha ido bien.</li>
+<li data-line="1" dir="auto"><strong>201</strong>: Se ha creado el recurso (Suele ser en un INSERT).</li>
+<li data-line="2" dir="auto"><strong>204</strong>: La petición no retorna datos. (Suele ser en un DELETE).</li>
+<li data-line="3" dir="auto"><strong>400</strong>: Los datos que ha enviado el cliente no son correctos.</li>
+<li data-line="4" dir="auto"><strong>401</strong>: Hay que estar logueado.</li>
+<li data-line="5" dir="auto"><strong>403</strong>: El usuario está logueado pero tiene Prohibido el acceso al documento.</li>
+<li data-line="6" dir="auto"><strong>404</strong>: No encuentra el documento.</li>
+<li data-line="7" dir="auto"><strong>500</strong>: Error del servidor.</li>
+</ul></div></div></div><div class="el-h2 heading-wrapper"><h2 data-heading="Métodos" dir="auto" class="heading" id="Métodos"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>Métodos</h2><div class="heading-children"><div class="el-p"><p dir="auto">Los métodos ( o verbos) HTTP indican que acción queremos hacer con los datos. Al navegar normalmente se usa siempre el&nbsp;<code>GET</code>.</p></div><div class="el-ul"><ul>
+<li data-line="0" dir="auto"><strong><code>GET</code></strong>: Queremos obtener los datos</li>
+<li data-line="1" dir="auto"><strong><code>POST</code></strong>: Queremos añadir los datos.</li>
+<li data-line="2" dir="auto"><strong><code>PUT</code></strong>: Queremos actualizar nuevos datos.</li>
+<li data-line="3" dir="auto"><strong><code>DELETE</code></strong>: Queremos borrar los datos.</li>
+</ul></div></div></div><div class="el-h2 heading-wrapper"><h2 data-heading="REST" dir="auto" class="heading" id="REST"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>REST</h2><div class="heading-children"><div class="el-p"><p dir="auto"><strong>REST es una interfaz para conectar varios sistemas basados en el protocolo HTTP</strong>&nbsp;(uno de los protocolos más antiguos) y nos sirve para obtener y generar datos y operaciones, devolviendo esos datos en formatos muy específicos, como XML y JSON <em>(actualmente el más usado)</em>.</p></div><div class="el-h4 heading-wrapper"><h4 data-heading="Las operaciones a realizar" dir="auto" class="heading" id="Las_operaciones_a_realizar"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>Las operaciones a realizar</h4><div class="heading-children"><div class="el-p"><p dir="auto">Vamos a ver 4 método HTTP que coinciden con los 4 métodos de un CRUD o con operaciones de SQL:</p></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th dir="ltr">Método HTTP</th>
+<th dir="ltr">Descripción</th>
+<th dir="ltr">Metodo CRUD</th>
+<th dir="ltr">Metodo SQL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td dir="ltr">GET</td>
+<td dir="ltr">Este método HTTP lo usaremos para cuando queremos leer datos del servidor</td>
+<td dir="ltr">Read</td>
+<td dir="ltr">SELECT</td>
+</tr>
+<tr>
+<td dir="ltr">POST</td>
+<td dir="ltr">Este método HTTP lo usaremos para añadir datos al servidor</td>
+<td dir="ltr">Create</td>
+<td dir="ltr">INSERT</td>
+</tr>
+<tr>
+<td dir="ltr">PUT</td>
+<td dir="ltr">Este método HTTP lo usaremos para actualizar&nbsp;datos del servidor</td>
+<td dir="ltr">Update</td>
+<td dir="ltr">UPDATE</td>
+</tr>
+<tr>
+<td dir="ltr">DELETE</td>
+<td dir="ltr">Este método HTTP lo usaremos para borrar datos del servidor</td>
+<td dir="ltr">Delete</td>
+<td dir="ltr">DELETE</td>
+</tr>
+</tbody>
+</table></div></div></div><div class="el-h4 heading-wrapper"><h4 data-heading="La Estructura de la URL" dir="auto" class="heading" id="La_Estructura_de_la_URL"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div>La Estructura de la URL</h4><div class="heading-children"><div class="el-p"><p dir="auto">Veamos la estructura de la URL de las peticiones en un supuesto ejemplo de una base de datos de usuarios:</p></div><div class="el-table" dir="ltr" style="overflow-x: auto;"><table>
+<thead>
+<tr>
+<th dir="ltr">Descripción</th>
+<th dir="ltr">URL</th>
+<th dir="ltr">Método HTTP</th>
+<th dir="ltr">JSON Enviado</th>
+<th dir="ltr">JSON Retornado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td dir="ltr">Obtener un libro</td>
+<td dir="ltr"><code>/libro/{idLibro}</code></td>
+<td dir="ltr">GET</td>
+<td dir="ltr">Ninguno</td>
+<td dir="ltr">Libro leido</td>
+</tr>
+<tr>
+<td dir="ltr">Listado de libros</td>
+<td dir="ltr"><code>/libro</code></td>
+<td dir="ltr">GET</td>
+<td dir="ltr">Ninguno</td>
+<td dir="ltr">Array de Libros</td>
+</tr>
+<tr>
+<td dir="ltr">Añadir un libro</td>
+<td dir="ltr"><code>/libro</code></td>
+<td dir="ltr">POST</td>
+<td dir="ltr">Libro a insertar</td>
+<td dir="ltr">Libro insertado</td>
+</tr>
+<tr>
+<td dir="ltr">Actualizar un libro</td>
+<td dir="ltr"><code>/libro/{idLibro}</code></td>
+<td dir="ltr">PUT</td>
+<td dir="ltr">Libro a actualizar</td>
+<td dir="ltr">Libro actualizado</td>
+</tr>
+<tr>
+<td dir="ltr">Borrar un libro</td>
+<td dir="ltr"><code>/libro/{idLibro}</code></td>
+<td dir="ltr">DELETE</td>
+<td dir="ltr">Ninguno</td>
+<td dir="ltr">Ninguno</td>
+</tr>
+</tbody>
+</table></div><div class="el-h5 heading-wrapper"><h5 data-heading="_Servidor REST en NodeJS_" dir="auto" class="heading" id="_Servidor_REST_en_NodeJS_"><div class="heading-collapse-indicator collapse-indicator collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><em>Servidor REST en NodeJS</em></h5><div class="heading-children"><div class="el-pre"><pre class="language-node" tabindex="0"><code data-line="0" class="language-node is-loaded">const app = express()
+const port = 80
+  
+app.get('/', (request, response) =&gt; {
+  response.set('Content-Type', 'text/plain');
+  response.status(200);
+ 
+  if (request.header('Accept-Language').startsWith("ca-ES")) {
+    response.send("Hola mon");
+  } else if (request.header('Accept-Language').startsWith("en-EN")) {
+    response.send("Hello World");
+  } else  {
+    response.send("Hola mundo");
+  }
+ 
+   
+});
+app.post('/', (request, response) =&gt; {
+  response.status(200);
+  response.send('Hello from post!');
+});
+app.delete('/', (request, response) =&gt; {
+  response.status(200);
+  response.send('Hello from delete!');
+});
+app.delete('/libro/38', (request, response) =&gt; {
+  response.status(200);
+  response.send('Borrado libro 38');
+});
+app.delete('/libro/39', (request, response) =&gt; {
+  response.status(404);
+  response.send('El libro 39 no existe');
+});
+  
+app.listen(port, (err) =&gt; {
+  console.log(`server is listening on ${port}`)
+})
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="mod-footer mod-ui"></div></div></div></div></div></div></div></div></div></div></div></div><div class="sidebar-right sidebar"><div class="sidebar-handle"></div><div class="sidebar-topbar"><div class="topbar-content"></div><div class="clickable-icon sidebar-collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M21 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H21C22.1046 21 23 20.1046 23 19V5C23 3.89543 22.1046 3 21 3Z"></path><path d="M10 4V20"></path><path d="M4 7H7"></path><path d="M4 10H7"></path><path d="M4 13H7"></path></svg></div></div><div class="sidebar-content"><div class="graph-view-wrapper"><div class="sidebar-section-header">Interactive Graph</div><div class="graph-view-placeholder">
+		<div class="graph-view-container">
+			<div class="graph-icon graph-expand" role="button" aria-label="Expand" data-tooltip-position="top"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div>
+			<canvas id="graph-canvas" class="hide" width="512px" height="512px"></canvas>
+		</div>
+		</div></div><div class="tree-container mod-root nav-folder tree-item outline-tree" data-depth="0"><div class="tree-header"><span class="sidebar-section-header">Table Of Contents</span><button class="clickable-icon collapse-tree-button" aria-label="Collapse All"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg></button></div><div class="tree-scroll-area tree-item-children nav-folder-children"><div class="tree-item mod-tree-folder nav-folder mod-collapsible is-collapsed" style="display: none;"></div><div class="tree-item" data-depth="1"><a class="tree-link" href="3-el-protocolo-http\el-protocolo-http.html#EL PROTOCOLO HTTP"><div class="tree-item-contents heading-link" heading-name="EL PROTOCOLO HTTP"><span class="tree-item-title">EL PROTOCOLO HTTP</span></div></a><div class="tree-item-children nav-folder-children"><div class="tree-item" data-depth="2"><a class="tree-link" href="3-el-protocolo-http\el-protocolo-http.html#Características"><div class="tree-item-contents heading-link" heading-name="Características"><span class="tree-item-title">Características</span></div></a><div class="tree-item-children nav-folder-children"></div></div><div class="tree-item" data-depth="2"><a class="tree-link" href="3-el-protocolo-http\el-protocolo-http.html#Ventajas"><div class="tree-item-contents heading-link" heading-name="Ventajas"><span class="tree-item-title">Ventajas</span></div></a><div class="tree-item-children nav-folder-children"></div></div><div class="tree-item" data-depth="2"><a class="tree-link" href="3-el-protocolo-http\el-protocolo-http.html#Formato"><div class="tree-item-contents heading-link" heading-name="Formato"><span class="tree-item-title">Formato</span></div></a><div class="tree-item-children nav-folder-children"></div></div><div class="tree-item mod-collapsible" data-depth="2"><a class="tree-link" href="3-el-protocolo-http\el-protocolo-http.html#Cabeceras_HTTP"><div class="tree-item-contents heading-link" heading-name="Cabeceras HTTP"><div class="collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><span class="tree-item-title">Cabeceras HTTP</span></div></a><div class="tree-item-children nav-folder-children"><div class="tree-item" data-depth="4"><a class="tree-link" href="3-el-protocolo-http\el-protocolo-http.html#Petición:"><div class="tree-item-contents heading-link" heading-name="Petición:"><span class="tree-item-title">Petición:</span></div></a><div class="tree-item-children nav-folder-children"></div></div><div class="tree-item" data-depth="4"><a class="tree-link" href="3-el-protocolo-http\el-protocolo-http.html#Respuesta"><div class="tree-item-contents heading-link" heading-name="Respuesta"><span class="tree-item-title">Respuesta</span></div></a><div class="tree-item-children nav-folder-children"></div></div></div></div><div class="tree-item" data-depth="2"><a class="tree-link" href="3-el-protocolo-http\el-protocolo-http.html#Estados_HTTP"><div class="tree-item-contents heading-link" heading-name="Estados HTTP"><span class="tree-item-title">Estados HTTP</span></div></a><div class="tree-item-children nav-folder-children"></div></div><div class="tree-item" data-depth="2"><a class="tree-link" href="3-el-protocolo-http\el-protocolo-http.html#Métodos"><div class="tree-item-contents heading-link" heading-name="Métodos"><span class="tree-item-title">Métodos</span></div></a><div class="tree-item-children nav-folder-children"></div></div><div class="tree-item mod-collapsible" data-depth="2"><a class="tree-link" href="3-el-protocolo-http\el-protocolo-http.html#REST"><div class="tree-item-contents heading-link" heading-name="REST"><div class="collapse-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon right-triangle"><path d="M3 8L12 17L21 8"></path></svg></div><span class="tree-item-title">REST</span></div></a><div class="tree-item-children nav-folder-children"><div class="tree-item" data-depth="4"><a class="tree-link" href="3-el-protocolo-http\el-protocolo-http.html#Las_operaciones_a_realizar"><div class="tree-item-contents heading-link" heading-name="Las operaciones a realizar"><span class="tree-item-title">Las operaciones a realizar</span></div></a><div class="tree-item-children nav-folder-children"></div></div><div class="tree-item" data-depth="4"><a class="tree-link" href="3-el-protocolo-http\el-protocolo-http.html#La_Estructura_de_la_URL"><div class="tree-item-contents heading-link" heading-name="La Estructura de la URL"><span class="tree-item-title">La Estructura de la URL</span></div></a><div class="tree-item-children nav-folder-children"></div></div><div class="tree-item" data-depth="5"><a class="tree-link" href="3-el-protocolo-http\el-protocolo-http.html#_Servidor_REST_en_NodeJS_"><div class="tree-item-contents heading-link" heading-name="_Servidor REST en NodeJS_"><span class="tree-item-title"><em>Servidor REST en NodeJS</em></span></div></a><div class="tree-item-children nav-folder-children"></div></div></div></div></div></div></div></div></div><script defer="">let rs = document.querySelector(".sidebar-right"); rs.classList.add("is-collapsed"); if (window.innerWidth > 768) rs.classList.remove("is-collapsed"); rs.style.setProperty("--sidebar-width", localStorage.getItem("sidebar-right-width"));</script></div></div></body></html>
